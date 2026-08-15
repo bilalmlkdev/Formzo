@@ -22,6 +22,7 @@ interface ProjectsState {
   create: (input: { name: string; description: string; templateId: string | null }) => Project
   remove: (id: string) => void
   update: (id: string, patch: Partial<Pick<Project, 'name' | 'description' | 'fields'>>) => void
+  reload: () => void
 }
 
 export const useProjectsStore = create<ProjectsState>((set, get) => ({
@@ -63,4 +64,6 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
     save(next)
     set({ projects: next })
   },
+
+  reload: () => set({ projects: load() }),
 }))

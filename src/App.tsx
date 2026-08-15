@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Navbar } from './components/Navbar'
 import { EmptyState } from './components/EmptyState'
 import { ProjectCard } from './components/ProjectCard'
 import { NewProjectModal } from './components/NewProjectModal'
 import { TemplatePickerModal } from './components/TemplatePickerModal'
 import { FormBuilder } from './components/FormBuilder'
+import { DashboardToolbar } from './components/DashboardToolbar'
+import type { SortBy } from './components/DashboardToolbar'
 import { useProjectsStore } from './lib/store'
 import { TEMPLATES } from './lib/types'
 
@@ -12,9 +14,23 @@ type ModalState = 'closed' | 'new' | 'templates'
 type Page = { name: 'dashboard' } | { name: 'builder'; projectId: string }
 
 export default function App() {
-  const { projects, create, remove } = useProjectsStore()
+  const { projects, create, remove, reload } = useProjectsStore()
   const [modal, setModal] = useState<ModalState>('closed')
   const [page, setPage] = useState<Page>({ name: 'dashboard' })
+  const [search, setSearch] = useState('')
+  const [sortBy, setSortBy] = useState<SortBy>('updated')
+
+  const visibleProjects = useMemo(() => {
+    const query = search.trim().toLowerCase()
+    const filtered = query
+      ? projects.filter(
+          (p) => p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query)
+        )
+      : projects
+    return [...filtered].sort((a, b) =>
+      sortBy === 'name' ? a.name.localeCompare(b.name) : b.updatedAt - a.updatedAt
+    )
+  }, [projects, search, sortBy])
 
   function handleCreateBlank(name: string, description: string) {
     const project = create({ name, description, templateId: null })
@@ -50,16 +66,32 @@ export default function App() {
         {projects.length === 0 ? (
           <EmptyState onAdd={() => setModal('new')} />
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {projects.map((p) => (
-              <ProjectCard
-                key={p.id}
-                project={p}
-                onOpen={() => setPage({ name: 'builder', projectId: p.id })}
-                onDelete={() => remove(p.id)}
-              />
-            ))}
-          </div>
+          <>
+            <DashboardToolbar
+              count={visibleProjects.length}
+              search={search}
+              onSearchChange={setSearch}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+              onRefresh={reload}
+            />
+            {visibleProjects.length === 0 ? (
+              <div className="py-16 text-center text-sm text-muted">
+                No forms match "{search}"
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {visibleProjects.map((p) => (
+                  <ProjectCard
+                    key={p.id}
+                    project={p}
+                    onOpen={() => setPage({ name: 'builder', projectId: p.id })}
+                    onDelete={() => remove(p.id)}
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </main>
 
