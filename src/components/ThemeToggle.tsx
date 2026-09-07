@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Sun, Moon, ChevronDown, Check } from 'lucide-react'
+import { Sun, Moon, Check } from 'lucide-react'
 import { applyTheme, getStoredTheme } from '../lib/theme'
 
 type Resolved = 'light' | 'dark'
@@ -47,7 +47,6 @@ export function ThemeToggle() {
         className="flex items-center gap-1.5 h-9 pl-2.5 pr-2 rounded-lg border border-border text-muted hover:text-text hover:border-text/30 transition"
       >
         <ActiveIcon size={14} />
-        <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {open && (
