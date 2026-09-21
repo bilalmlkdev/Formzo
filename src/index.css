@@ -60,3 +60,48 @@ html, body, #root {
   margin: 0;
   padding: 0;
 }
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Custom scrollbar styling (webkit) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #b0b5bc;
+}
+
+/* Custom scrollbar styling (standard) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+/* Slide-in-from-right animation for sidebar */
+.slide-in-right {
+  animation: slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
