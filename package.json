@@ -1,32 +1,38 @@
 {
-  "name": "formussy",
+  "name": "formzo",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bilalmlkdev/formussy.git"
-  },
-  "homepage": "https://formussy.vercel.app",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dnd-kit/helpers": "^0.5.0",
+    "@dnd-kit/react": "^0.5.0",
+    "@hookform/resolvers": "^5.9.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.4.0",
+    "lucide-react": "^1.47.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "framer-motion": "^11.3.0",
-    "lucide-react": "^0.441.0",
-    "zustand": "^4.5.5"
+    "react-hook-form": "^7.88.0",
+    "react-router": "^6.30.6",
+    "react-router-dom": "^6.30.6",
+    "recharts": "^3.10.1",
+    "sonner": "^2.0.8",
+    "tailwind-merge": "^3.7.0",
+    "zod": "^4.6.5",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
-    "typescript": "^5.5.4",
-    "vite": "^5.4.1",
     "tailwindcss": "^4.0.0",
-    "@tailwindcss/vite": "^4.0.0"
+    "typescript": "^5.5.4",
+    "vite": "^5.4.1"
   }
 }
