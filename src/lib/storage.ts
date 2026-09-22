@@ -1,5 +1,3 @@
-import type { Form } from "../types/form";
-import type { FormResponse } from "../types/response";
 import type { User, Preferences } from "../types/user";
 
 const PREFIX = "formzo:";
@@ -24,26 +22,6 @@ function setItem<T>(key: string, value: T): void {
 
 function removeItem(key: string): void {
   localStorage.removeItem(getKey(key));
-}
-
-// Forms
-export function getForms(): Form[] {
-  const data = getItem<Form[]>("forms");
-  return Array.isArray(data) ? data : [];
-}
-
-export function setForms(forms: Form[]): void {
-  setItem("forms", forms);
-}
-
-// Responses
-export function getResponses(): FormResponse[] {
-  const data = getItem<FormResponse[]>("responses");
-  return Array.isArray(data) ? data : [];
-}
-
-export function setResponses(responses: FormResponse[]): void {
-  setItem("responses", responses);
 }
 
 // User
